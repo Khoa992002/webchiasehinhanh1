@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import Dao.ImageDao;
 import Dao.UserDao;
@@ -25,27 +26,29 @@ public class HomeControl extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stubs
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
-		String id = request.getParameter("Uid");
 		ImageDao imageDao = new ImageDao();
 		List<Images> listI = imageDao.getImages();
 		request.setAttribute("listI", listI);
 		categoryDao categoryDao = new categoryDao();
 		List<category> listC = categoryDao.getAllCategory();
 		request.setAttribute("listC", listC);
-		UserDao userdao = new UserDao();
-		Accounts a = userdao.getNameUser(id);
-		request.setAttribute("user", a);
+		HttpSession session = request.getSession();
+		Accounts a = (Accounts) session.getAttribute("acc");
+		if(a!=null)
+			request.setAttribute("user", a);
 		WebDao webDao = new WebDao();
 		Web web = webDao.getInfBanner();
 		request.setAttribute("web", web);
 		request.getRequestDispatcher("home.jsp").forward(request, response);
+	
+		// TODO Auto-generated method stubs
+	
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		
 	}
 
 	 

@@ -13,46 +13,52 @@ import javax.servlet.http.HttpSession;
 import Dao.CommentDao;
 import Dao.Dao;
 import Dao.ImageDao;
-import Dao.UserDao;
-import Dao.WebDao;
-import Model .Accounts;
-import Model.Comments;
-import Model .Images;
+import Model.Accounts;
+import Model.Images;
 import Model.InfUser;
 
-@WebServlet("/ImageDetail")
-public class ImageDetail extends HttpServlet {
+/**
+ * Servlet implementation class DeleteCommentControl
+ */
+@WebServlet("/DeleteCommentControl")
+public class DeleteCommentControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
- 
-    public ImageDetail() {
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public DeleteCommentControl() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		String idImage = request.getParameter("Iid");
 		String Uid = request.getParameter("Uid");
-		String Cid = request.getParameter("Cid");
+		String Cid = request.getParameter("CMid");
+		CommentDao dao = new CommentDao();
+//		dao.upDateView(idImage);
 		
-		UserDao Udao = new UserDao();
-		CommentDao CDao=new CommentDao();
-//      Lấy thông tin hình ảnh
+	
 		ImageDao Idao= new ImageDao();
 		Images I = Idao.getImageByid(idImage);
-//		lấy thông tin người dăng ảnh
-		Accounts A = Udao.getNameUser(Uid);
-		request.setAttribute("Ac", A);
+		dao.DeleteComment(Cid);
 		request.setAttribute("detail", I);
-//		Lấy 6 hình ảnh mới nhất của người đăng trong danh muc
 		List<Images> list = Idao.getTop6ImagesByCid(Cid);
 		request.setAttribute("listImg_Cid", list);
-//		Lấy comment của ảnh
-		List<InfUser> listCM = CDao.getCommentByidImg(idImage);
+		List<InfUser> listCM = dao.getCommentByidImg(idImage);
 		request.setAttribute("listCM", listCM);
 		request.getRequestDispatcher("imageDetail.jsp").forward(request, response);
 	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);

@@ -11,16 +11,16 @@ public class DBContext {
         String url = "jdbc:sqlserver://"+serverName+":"+portNumber + "\\" + instance +";databaseName="+dbName;
         if(instance == null || instance.trim().isEmpty())
             url = "jdbc:sqlserver://"+serverName+":"+portNumber +";databaseName="+dbName;
-        System.out.println(url);
+//        System.out.println(url);
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         return DriverManager.getConnection(url, userID, password);
     }   
-    private final String serverName = "LAPTOP-MAMMAM";
-    private final String dbName = "DoAn01";
+    private final String serverName = "localhost";
+    private final String dbName = "Db_du_an_";
     private final String portNumber = "1433";
     private final String instance="";
     private final String userID = "sa";
-    private final String password = "sa";
+    private final String password = "123456";
     
     public static void main(String[] args) {
 		try {
