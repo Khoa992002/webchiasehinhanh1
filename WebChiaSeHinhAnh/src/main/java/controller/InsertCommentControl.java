@@ -12,47 +12,37 @@ import javax.servlet.http.HttpSession;
 
 import Dao.CommentDao;
 import Dao.Dao;
-import Dao.ImageDao;
-import Dao.UserDao;
-import Dao.WebDao;
-import Model .Accounts;
+import Model.Accounts;
 import Model.Comments;
-import Model .Images;
+import Model.Images;
 import Model.InfUser;
 
-@WebServlet("/ImageDetail")
-public class ImageDetail extends HttpServlet {
+@WebServlet("/InsertCommentControl")
+public class InsertCommentControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
- 
-    public ImageDetail() {
+       
+  
+    public InsertCommentControl() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		String idImage = request.getParameter("Iid");
 		String Uid = request.getParameter("Uid");
 		String Cid = request.getParameter("Cid");
-		
-		UserDao Udao = new UserDao();
-		CommentDao CDao=new CommentDao();
-//      Lấy thông tin hình ảnh
-		ImageDao Idao= new ImageDao();
-		Images I = Idao.getImageByid(idImage);
-//		lấy thông tin người dăng ảnh
-		Accounts A = Udao.getNameUser(Uid);
-		request.setAttribute("Ac", A);
-		request.setAttribute("detail", I);
-//		Lấy 6 hình ảnh mới nhất của người đăng trong danh muc
-		List<Images> list = Idao.getTop6ImagesByCid(Cid);
-		request.setAttribute("listImg_Cid", list);
-//		Lấy comment của ảnh
-		List<InfUser> listCM = CDao.getCommentByidImg(idImage);
-		request.setAttribute("listCM", listCM);
-		request.getRequestDispatcher("imageDetail.jsp").forward(request, response);
+		CommentDao Udao = new CommentDao();
+		String comment = request.getParameter("comment");
+		HttpSession session = request.getSession();
+		Accounts ac = (Accounts) session.getAttribute("acc");
+		String userID = ac.getUserID();
+		Udao.insertComment(comment,userID,idImage);
+		response.sendRedirect("ImageDetail?Iid="+idImage+"&Uid="+Uid+"&Cid="+Cid);
 	}
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);

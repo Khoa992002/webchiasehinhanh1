@@ -115,7 +115,7 @@ ul.nav a:hover {
 
 		<div class="image-container">
 			<c:forEach items="${listI}" var="I">
-				<c:if test="${I.isPublic==1}">
+				<c:if test="${I.ready==1}">
 					<a
 						href="ImageDetail?Iid=${I.idImage}&Uid=${I.userID}&Cid=${I.idCategory}">
 						<img src="img/dataImg/${I.images}" alt="Lỗi">

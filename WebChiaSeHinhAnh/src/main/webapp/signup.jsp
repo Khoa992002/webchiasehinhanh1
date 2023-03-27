@@ -50,8 +50,8 @@
 			<select name="gender" class="form-select"
 				aria-label="Default select example">
 				<option selected>Giới tính</option>
-				<option value="nam">Nam</option>
-				<option value="nữ">Nữ</option>
+				<option value="Nam">Nam</option>
+				<option value="Nữ">Nữ</option>
 			</select>
 		</div>
 		${mess}

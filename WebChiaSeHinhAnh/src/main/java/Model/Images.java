@@ -15,13 +15,11 @@ public class Images {
 	private String date;
 	private int view;
 	private int ready;
-	private String isPublic;
 	public Images() {
 		// TODO Auto-generated constructor stub
 	}
 	public Images(int idImage, String images, String idCategory, String userID, String tag, float tieuCu, String khauDo,
-			String tocDoManTrap, String iSO, String camera, String loaiHinhAnh, String date, int view, int ready,
-			String isPublic) {
+			String tocDoManTrap, String iSO, String camera, String loaiHinhAnh, String date, int view, int ready) {
 		super();
 		this.idImage = idImage;
 		this.images = images;
@@ -37,9 +35,7 @@ public class Images {
 		this.date = date;
 		this.view = view;
 		this.ready = ready;
-		this.isPublic = isPublic;
 	}
-
 	public int getIdImage() {
 		return idImage;
 	}
@@ -123,12 +119,6 @@ public class Images {
 	}
 	public void setReady(int ready) {
 		this.ready = ready;
-	}
-	public String getIsPublic() {
-		return isPublic;
-	}
-	public void setIsPublic(String isPublic) {
-		this.isPublic = isPublic;
 	}
 	
 }
