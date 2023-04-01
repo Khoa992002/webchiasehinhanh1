@@ -37,6 +37,26 @@ public class UserDao {
 		return null;
 	}
 	
+	// lấy thông tin user
+	public List<Accounts> get10RowAccountsUser(int index) {
+		List<Accounts> listI = new ArrayList<>();
+		String query = "select * from Accounts\r\n" + "order by userID\r\n" + "offset ? rows fetch next 10 rows only";
+		try {
+			conn = new DBContext().getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setInt(1, (index - 1) * 10);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				listI.add(new Accounts(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),
+						rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9)));
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return listI;
+
+	}
+	
 
 	//kiểm tra tài khoản user đã tồn tại hay chưa 
 		public Accounts checkAccountsExit(String gmail) {
@@ -166,4 +186,26 @@ public class UserDao {
 			return list;
 
 		}
+		
+
+		// đếm account trong dtb
+		public int getTotalAccount() {
+			String query = "select count(*) from Accounts ";
+			try {
+				conn = new DBContext().getConnection();
+				ps = conn.prepareStatement(query);
+				rs = ps.executeQuery();
+				while (rs.next()) {
+					return rs.getInt(1);
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			return 0;
+		}
+		
+		
+		
+		
+		
 }
